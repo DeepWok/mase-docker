@@ -83,12 +83,12 @@ RUN pip3 install --pre torchvision --extra-index-url https://download.pytorch.or
                     timm pytorch-nlp datasets ipython ipdb \
                     sentencepiece einops deepspeed pybind11 \
                     tabulate tensorboardx hyperopt accelerate \
-                    optuna stable-baselines3 h5py scikit-learn \
+                    optuna stable-baselines3[extra] h5py scikit-learn \
                     scipy onnxruntime matplotlib sphinx-rtd-theme \
                     imageio imageio-ffmpeg opencv-python kornia einops \
                     ghp-import optimum pytest-profiling myst_parser \
                     pytest-cov pytest-xdist pytest-sugar pytest-html \
-                    lightning wandb \
+                    lightning wandb tensorboard\
     && pip install -U Pillow \
     && pip install mpmath==1.3.0 
 
