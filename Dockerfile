@@ -75,6 +75,13 @@ CMD ["bash"]
 # Install PyTorch and Torch-MLIR
 RUN pip3 install --upgrade pip
 RUN pip3 install torch-mlir -f https://github.com/llvm/torch-mlir-release/releases/expanded_assets/dev-wheels
+
+# Install onnxruntime depending on cuda version
+RUN if [ $(echo "$CUDA_VERSION >= 12" | bc) -eq 1 ]; then \
+        pip install onnxruntime-gpu --extra-index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/onnxruntime-cuda-12/pypi/simple/; \
+    else \
+        pip install onnxruntime-gpu; \
+    fi
 RUN pip3 install onnx black toml GitPython colorlog cocotb[bus]==1.8.0 \
                     pytest pytorch-lightning transformers toml \
                     timm pytorch-nlp datasets ipython ipdb \
@@ -86,8 +93,13 @@ RUN pip3 install onnx black toml GitPython colorlog cocotb[bus]==1.8.0 \
                     ghp-import optimum pytest-profiling myst_parser \
                     pytest-cov pytest-xdist pytest-sugar pytest-html \
                     lightning wandb bitarray bitstring \
+                    torch-tensorRT tensorRT absl-py sphinx-glpi-theme\
+                    onnxconverter-common prettytable pyyaml pynvml pycuda cuda-python \
     && pip install -U Pillow \
     && pip install mpmath==1.3.0 
+    
+# Install PyTorch-Quantization
+RUN pip install --no-cache-dir --index-url https://pypi.nvidia.com pytorch-quantization
 
 # Add environment variables
 ARG VHLS_PATH
