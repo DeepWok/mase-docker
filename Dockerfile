@@ -95,8 +95,8 @@ RUN pip3 install onnx black toml GitPython colorlog cocotb[bus]==1.8.0 \
                  ghp-import optimum pytest-profiling myst_parser \
                  pytest-cov pytest-xdist pytest-sugar pytest-html \
                  lightning wandb bitarray bitstring \
-                    torch-tensorRT tensorRT absl-py sphinx-glpi-theme\
-                    onnxconverter-common prettytable pyyaml pynvml pycuda cuda-python \
+                 torch-tensorRT tensorRT absl-py sphinx-glpi-theme\
+                 onnxconverter-common prettytable pyyaml pynvml pycuda cuda-python \
     && pip install -U Pillow \
     && pip install mpmath==1.3.0 
     
