@@ -91,6 +91,12 @@ RUN pip3 install onnx black toml GitPython colorlog cocotb[bus]==1.8.0 \
     && pip install -U Pillow \
     && pip install mpmath==1.3.0 
 
+RUN pip install tensorrt
+RUN pip install nvidia-pyindex
+RUN pip install pytorch-quantization==2.1.3
+RUN pip install pycuda
+
+
 # Add environment variables
 ARG VHLS_PATH
 ARG VHLS_VERSION
