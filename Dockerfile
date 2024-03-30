@@ -78,13 +78,7 @@ RUN pip3 install --pre torch-mlir torchvision \
                  -f https://github.com/llvm/torch-mlir-release/releases/expanded_assets/dev-wheels \
                  --extra-index-url https://download.pytorch.org/whl/nightly/cpu
 
-# Install onnxruntime depending on cuda version
-RUN if [ $(echo "$CUDA_VERSION >= 12" | bc) -eq 1 ]; then \
-        pip install onnxruntime-gpu --extra-index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/onnxruntime-cuda-12/pypi/simple/; \
-    else \
-        pip install onnxruntime-gpu; \
-    fi
-RUN pip3 install onnx black toml GitPython colorlog cocotb[bus]==1.8.0 \
+RUN pip3 install -v onnxruntime-gpu onnx black toml GitPython colorlog cocotb[bus]==1.8.0 \
                  pytest pytorch-lightning transformers toml \
                  timm pytorch-nlp datasets ipython ipdb \
                  sentencepiece einops deepspeed pybind11 \
@@ -96,7 +90,7 @@ RUN pip3 install onnx black toml GitPython colorlog cocotb[bus]==1.8.0 \
                  pytest-cov pytest-xdist pytest-sugar pytest-html \
                  lightning wandb bitarray bitstring \
                  torch-tensorRT tensorRT absl-py sphinx-glpi-theme\
-                 onnxconverter-common prettytable pyyaml pynvml pycuda cuda-python \
+                 onnxconverter-common prettytable pyyaml pynvml cuda-python \
     && pip install -U Pillow \
     && pip install mpmath==1.3.0 
     
