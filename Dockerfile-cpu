@@ -4,7 +4,7 @@ FROM ubuntu:22.04
 
 USER root
 
-ADD install-pkgs.sh
+ADD install-pkgs.sh install-pkgs.sh
 RUN bash install-pkgs.sh
 
 CMD ["bash"]
