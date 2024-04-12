@@ -1,0 +1,38 @@
+name: GPU Docker Image Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the GPU Docker image
+      run: |
+        TAG=$(date -u +%Y%m%d%H%M%S)
+
+        docker build --build-arg VHLS_PATH=/mnt/applications/Xilinx/23.1 \
+          --build-arg VHLS_VERSION=2023.1 \
+          -f Dockerfile \
+          --tag docker.io/deepwok/mase-docker-gpu:$TAG . || exit 1
+
+        # Push to dockerhub
+        if [ "${{ secrets.DOCKER_HUB_PASSWORD }}" != "" ]; then
+          echo ${{secrets.DOCKER_HUB_PASSWORD}} | docker login docker.io -u deepwok --password-stdin
+          docker push docker.io/deepwok/mase-docker-gpu:$TAG
+          docker tag docker.io/deepwok/mase-docker-gpu:$TAG docker.io/deepwok/mase-docker-gpu:latest
+          docker push docker.io/deepwok/mase-docker-gpu:latest
+          echo "MASE Docker image for GPU pushed."
+        else
+          echo "Skipped pushing docker image for GPU."
+        fi
+
+
+
