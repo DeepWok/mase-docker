@@ -20,7 +20,7 @@ jobs:
 
         docker build --build-arg VHLS_PATH=/mnt/applications/Xilinx/23.1 \
           --build-arg VHLS_VERSION=2023.1 \
-          -f Dockerfile \
+          -f Dockerfile-gpu \
           --tag docker.io/deepwok/mase-docker-gpu:$TAG . || exit 1
 
         # Push to dockerhub
