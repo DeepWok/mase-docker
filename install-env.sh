@@ -14,9 +14,9 @@ printf "\
 \n# Basic PATH setup \
 \nexport PATH=/workspace/scripts:/workspace/hls/build/bin:/workspace/llvm/build/bin:\$PATH:/srcPkgs/verible/bin \
 \n# Vitis HLS setup \
-\nexport VHLS=${VHLS_PATH} \
-\nexport XLNX_VERSION=${VHLS_VERSION} \
-\n# source \${HLS}/Vitis_HLS/\$XLNX_VERSION/settings64.sh \
+\nexport VHLS=$VHLS_PATH \
+\nexport XLNX_VERSION=$VHLS_VERSION \
+\n# source \${VHLS}/Vitis_HLS/\${XLNX_VERSION}/settings64.sh \
 \n# MLIR-AIE PATH setup \
 \nexport PATH=/srcPkgs/cmake/bin:/workspace/hls/build/bin:/workspace/llvm/build/bin:/workspace/mlir-aie/install/bin:/workspace/mlir-air/install/bin:\$PATH \
 \nexport PYTHONPATH=/workspace:/workspace/machop:/workspace/mlir-aie/install/python:/workspace/mlir-air/install/python:\$PYTHONPATH \
