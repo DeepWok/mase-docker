@@ -11,12 +11,12 @@ pip3 install onnx black toml GitPython colorlog cocotb[bus]==1.8.0 \
                  timm pytorch-nlp datasets ipython ipdb \
                  sentencepiece einops deepspeed pybind11 \
                  tabulate tensorboardx hyperopt accelerate \
-                 optuna stable-baselines3 h5py scikit-learn \
+                 optuna stable-baselines3[extra] h5py scikit-learn \
                  scipy onnxruntime matplotlib sphinx-rtd-theme \
                  imageio imageio-ffmpeg opencv-python kornia einops \
                  ghp-import optimum pytest-profiling myst_parser \
                  pytest-cov pytest-xdist pytest-sugar pytest-html \
                  lightning wandb bitarray bitstring emoji \
-                 "numpy<2.0" \
+                 "numpy<2.0" tensorboard \
     && pip install -U Pillow \
     && pip install mpmath==1.3.0 
