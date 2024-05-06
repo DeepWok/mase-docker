@@ -59,6 +59,13 @@ mkdir -p /srcPkgs \
     && make -j 4 \
     && make install
 
+# Install NASLlib from source
+mkdir -p /srcPkgs \
+    && cd /srcPkgs \
+    && git clone https://github.com/JaredJoss/NASLib.git
+    && cd NASLib \
+    && pip install .
+
 # Append any packages you need here
 # apt-get ...
 apt-get update -y \
