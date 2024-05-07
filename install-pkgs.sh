@@ -64,7 +64,8 @@ mkdir -p /srcPkgs \
     && cd /srcPkgs \
     && git clone https://github.com/JaredJoss/NASLib.git \
     && cd NASLib \
-    && pip install .
+    && pip3 install . \
+    && cd ..
 
 # Append any packages you need here
 # apt-get ...
