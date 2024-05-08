@@ -7,7 +7,7 @@ USER root
 # Install apt packages 
 ADD install-pkgs.sh install-pkgs.sh
 RUN bash install-pkgs.sh
-docker builder prune
+
 CMD ["bash"]
 
 # Install PyTorch and Torch-MLIR

@@ -22,6 +22,7 @@ jobs:
           --build-arg VHLS_VERSION=2023.1 \
           -f Dockerfile-cpu \
           --tag docker.io/deepwok/mase-docker-cpu:$TAG . || exit 1
+        docker build prune
 
         # Push to dockerhub
         if [ "${{ secrets.DOCKER_HUB_PASSWORD }}" != "" ]; then
