@@ -64,8 +64,7 @@ mkdir -p /srcPkgs \
     && cd /srcPkgs \
     && git clone https://github.com/JaredJoss/NASLib.git \
     && cd NASLib \
-    && pip3 install . \
-    && docker builder prune
+    && pip3 install . 
 
 # Append any packages you need here
 # apt-get ...
