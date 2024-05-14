@@ -18,5 +18,6 @@ pip3 install onnx black toml GitPython colorlog cocotb[bus]==1.8.0 \
                  pytest-cov pytest-xdist pytest-sugar pytest-html \
                  lightning wandb bitarray bitstring emoji \
                  "numpy<2.0" tensorboard \
+		 onnxconverter-common absl-py sphinx-glpi-theme prettytable
     && pip install -U Pillow \
     && pip install mpmath==1.3.0 
