@@ -19,7 +19,7 @@ printf "\
 \n# source \${VHLS}/Vitis_HLS/\${XLNX_VERSION}/settings64.sh \
 \n# MLIR-AIE PATH setup \
 \nexport PATH=/srcPkgs/cmake/bin:/workspace/hls/build/bin:/workspace/llvm/build/bin:/workspace/mlir-aie/install/bin:/workspace/mlir-air/install/bin:\$PATH \
-\nexport PYTHONPATH=/workspace/src:/workspace:/workspace/machop:/workspace/mlir-aie/install/python:/workspace/mlir-air/install/python:\$PYTHONPATH \
+\nexport PYTHONPATH=\$PATH:/workspace/src:/workspace:/workspace/machop:/workspace/mlir-aie/install/python:/workspace/mlir-air/install/python:\$PYTHONPATH \
 \nexport LD_LIBRARY_PATH=/workspace/mlir-aie/lib:/workspace/mlir-air/lib:/opt/xaiengine:\$LD_LIBRARY_PATH \
 \n# Thread setup \
 \nexport nproc=\$(grep -c ^processor /proc/cpuinfo) \
