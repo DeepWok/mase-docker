@@ -20,7 +20,7 @@ apt-get update -y \
                           libssl-dev git vim wget htop \
                           lld parallel clang-format clang-tidy \
                           libtinfo5 libidn11-dev unzip \
-                          locales python3-sphinx graphviz
+                          locales python3-sphinx graphviz curl
 
 locale-gen en_US.UTF-8
 
@@ -58,6 +58,9 @@ mkdir -p /srcPkgs \
     && ./bootstrap --prefix=/usr/local \
     && make -j 4 \
     && make install
+
+# Install Justfile
+curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to /usr/local/bin 
 
 # Append any packages you need here
 # apt-get ...
