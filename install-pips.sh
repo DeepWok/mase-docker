@@ -9,7 +9,7 @@ set -o nounset
 # Install MASE pip dependencies
 mkdir -p /srcPkgs \
     && cd /srcPkgs \
-    && git clone git@github.com:DeepWok/mase.git \
+    && git clone https://github.com/DeepWok/mase.git \
     && cd mase \
     && pip3 install -e . \
     && cd .. \
