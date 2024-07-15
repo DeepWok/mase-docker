@@ -20,7 +20,8 @@ apt-get update -y \
                           libssl-dev git vim wget htop \
                           lld parallel clang-format clang-tidy \
                           libtinfo5 libidn11-dev unzip \
-                          locales python3-sphinx graphviz curl
+                          locales python3-sphinx graphviz curl \
+                          time
 
 locale-gen en_US.UTF-8
 
