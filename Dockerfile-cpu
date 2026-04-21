@@ -1,27 +1,20 @@
-# This Dockerfile configures a Docker environment that
-# contains all the required packages for the tool
 FROM ubuntu:22.04
-
 USER root
 
-# Install apt packages 
 ADD install-pkgs.sh install-pkgs.sh
 RUN bash install-pkgs.sh
 
-CMD ["bash"]
-
-# Install PyTorch and Torch-MLIR
 RUN pip3 install --upgrade pip
-RUN pip3 install --pre torch-mlir torchvision \
-                 -f https://github.com/llvm/torch-mlir-release/releases/expanded_assets/dev-wheels \
-                 --extra-index-url https://download.pytorch.org/whl/nightly/cpu
 
-# Install pip packages 
+# Pin CPU-only PyTorch before MASE install to prevent pip from pulling in the CUDA variant
+RUN pip3 install --no-cache-dir \
+    torch==2.6 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cpu
+
+# Install MASE dependencies, remove any NVIDIA packages pulled in, then re-pin CPU torch
 ADD install-pips.sh install-pips.sh
-RUN bash install-pips.sh
+RUN bash install-pips.sh && \
+    pip3 list | grep -E '^nvidia-' | awk '{print $1}' | xargs pip3 uninstall -y 2>/dev/null || true && \
+    pip3 install --force-reinstall --no-deps --no-cache-dir \
+        torch==2.6 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cpu
 
-# Add environment variables
-ARG VHLS_PATH
-ARG VHLS_VERSION
-ADD install-env.sh install-env.sh
-RUN bash install-env.sh $VHLS_PATH $VHLS_VERSION
+CMD ["bash"]

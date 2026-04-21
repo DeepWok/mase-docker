@@ -1,25 +1,40 @@
-# This Dockerfile configures a Docker environment that
-# contains all the required packages for the tool
-FROM ubuntu:22.04
+# GPU Dockerfile for MASE
+#
+# Build arguments:
+#   CUDA_VERSION    - CUDA version matching your host driver (default: 12.1.1)
+#                     Run `nvidia-smi` on the host to check the max supported CUDA version.
+#                     Common options: 11.8.0 / 12.1.1 / 12.4.0
+#   TORCH_CUDA_ARCH - PyTorch CUDA wheel tag matching CUDA_VERSION (default: cu121)
+#                     Common options: cu118 / cu121 / cu124
+#
+# Example build command:
+#   docker buildx build --platform linux/amd64 \
+#     --build-arg CUDA_VERSION=12.1.1 \
+#     --build-arg TORCH_CUDA_ARCH=cu121 \
+#     -f Dockerfile-gpu \
+#     --tag aaronyirenzhao/mase-gpu:latest \
+#     --push .
 
+ARG CUDA_VERSION=12.1.1
+FROM nvidia/cuda:${CUDA_VERSION}-cudnn8-devel-ubuntu22.04
 USER root
 
-# Install apt packages 
+# Install system packages
 ADD install-pkgs.sh install-pkgs.sh
 RUN bash install-pkgs.sh
 
-CMD ["bash"]
-
-# Install PyTorch and Torch-MLIR
 RUN pip3 install --upgrade pip
-RUN pip3 install torch torchvision torchaudio
 
-# Install pip packages 
+# Install CUDA-enabled PyTorch.
+# The wheel index must match CUDA_VERSION (e.g. cu121 for CUDA 12.1).
+# If your host driver is older, override TORCH_CUDA_ARCH at build time.
+ARG TORCH_CUDA_ARCH=cu121
+RUN pip3 install --no-cache-dir \
+    torch==2.6 torchvision==0.21.0 torchaudio==2.6.0 \
+    --index-url https://download.pytorch.org/whl/${TORCH_CUDA_ARCH}
+
+# Install MASE and its dependencies
 ADD install-pips.sh install-pips.sh
 RUN bash install-pips.sh
 
-# Add environment variables
-ARG VHLS_PATH
-ARG VHLS_VERSION
-ADD install-env.sh install-env.sh
-RUN bash install-env.sh $VHLS_PATH $VHLS_VERSION
+CMD ["bash"]
