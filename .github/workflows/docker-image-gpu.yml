@@ -19,7 +19,6 @@ jobs:
         TAG=$(date -u +%Y%m%d%H%M%S)
 
         docker build --no-cache \
-          --build-arg CUDA_VERSION=12.4.0 \
           --build-arg TORCH_CUDA_ARCH=cu124 \
           -f Dockerfile-gpu \
           --tag docker.io/deepwok/mase-docker-gpu:$TAG . || exit 1
