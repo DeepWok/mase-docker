@@ -16,7 +16,7 @@
 #     --push .
 
 ARG CUDA_VERSION=12.4.0
-FROM nvidia/cuda:${CUDA_VERSION}-cudnn9-devel-ubuntu22.04
+FROM nvidia/cuda:${CUDA_VERSION}-cudnn8-devel-ubuntu22.04
 USER root
 
 # Install system packages
