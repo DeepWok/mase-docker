@@ -33,3 +33,4 @@ jobs:
         else
           echo "Skipped pushing: DOCKER_HUB_PASSWORD secret not configured."
         fi
+
