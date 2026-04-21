@@ -7,15 +7,8 @@
 #   - NVIDIA GPU with drivers installed on the host
 #   - Run with: docker run --gpus all ...
 #
-# Build arguments:
-#   TORCH_CUDA_ARCH - PyTorch CUDA wheel tag (default: cu124)
-#                     Run `nvidia-smi` on the host to check your max supported
-#                     CUDA version, then pick the matching tag.
-#                     Common options: cu118 / cu121 / cu124
-#
 # Example build command:
 #   docker buildx build --platform linux/amd64 \
-#     --build-arg TORCH_CUDA_ARCH=cu124 \
 #     -f Dockerfile-gpu \
 #     --tag aaronyirenzhao/mase-gpu:latest \
 #     --push .
@@ -29,13 +22,9 @@ RUN bash install-pkgs.sh
 
 RUN pip3 install --upgrade pip
 
-# Install CUDA-enabled PyTorch.
-# The wheel bundles the CUDA runtime - no NVIDIA base image needed.
-# Override TORCH_CUDA_ARCH at build time to match your host driver.
-ARG TORCH_CUDA_ARCH=cu124
-RUN pip3 install --no-cache-dir \
-    torch==2.6 torchvision==0.21.0 torchaudio==2.6.0 \
-    --index-url https://download.pytorch.org/whl/${TORCH_CUDA_ARCH}
+# Install PyTorch with CUDA support.
+# pip installs the CUDA-enabled wheel by default on Linux (includes bundled CUDA runtime).
+RUN pip3 install --no-cache-dir torch torchvision torchaudio
 
 # Install MASE and its dependencies
 ADD install-pips.sh install-pips.sh
