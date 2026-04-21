@@ -60,8 +60,8 @@ DOCKER_USER=<your-dockerhub-username>
 TAG=$(date -u +%Y%m%d%H%M%S) && \
 docker buildx build --no-cache \
   --platform linux/amd64 \
-  --build-arg CUDA_VERSION=12.1.1 \
-  --build-arg TORCH_CUDA_ARCH=cu121 \
+  --build-arg CUDA_VERSION=12.4.0 \
+  --build-arg TORCH_CUDA_ARCH=cu124 \
   -f Dockerfile-gpu \
   --tag docker.io/$DOCKER_USER/mase-gpu:$TAG \
   --tag docker.io/$DOCKER_USER/mase-gpu:latest \

@@ -1,10 +1,10 @@
 # GPU Dockerfile for MASE
 #
 # Build arguments:
-#   CUDA_VERSION    - CUDA version matching your host driver (default: 12.1.1)
+#   CUDA_VERSION    - CUDA version matching your host driver (default: 12.4.0)
 #                     Run `nvidia-smi` on the host to check the max supported CUDA version.
 #                     Common options: 11.8.0 / 12.1.1 / 12.4.0
-#   TORCH_CUDA_ARCH - PyTorch CUDA wheel tag matching CUDA_VERSION (default: cu121)
+#   TORCH_CUDA_ARCH - PyTorch CUDA wheel tag matching CUDA_VERSION (default: cu124)
 #                     Common options: cu118 / cu121 / cu124
 #
 # Example build command:
@@ -15,8 +15,8 @@
 #     --tag aaronyirenzhao/mase-gpu:latest \
 #     --push .
 
-ARG CUDA_VERSION=12.1.1
-FROM nvidia/cuda:${CUDA_VERSION}-cudnn8-devel-ubuntu22.04
+ARG CUDA_VERSION=12.4.0
+FROM nvidia/cuda:${CUDA_VERSION}-cudnn9-devel-ubuntu22.04
 USER root
 
 # Install system packages
@@ -28,7 +28,7 @@ RUN pip3 install --upgrade pip
 # Install CUDA-enabled PyTorch.
 # The wheel index must match CUDA_VERSION (e.g. cu121 for CUDA 12.1).
 # If your host driver is older, override TORCH_CUDA_ARCH at build time.
-ARG TORCH_CUDA_ARCH=cu121
+ARG TORCH_CUDA_ARCH=cu124
 RUN pip3 install --no-cache-dir \
     torch==2.6 torchvision==0.21.0 torchaudio==2.6.0 \
     --index-url https://download.pytorch.org/whl/${TORCH_CUDA_ARCH}
