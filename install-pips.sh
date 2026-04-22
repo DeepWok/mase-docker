@@ -11,6 +11,6 @@ mkdir -p /srcPkgs \
     && cd /srcPkgs \
     && git clone https://github.com/DeepWok/mase.git \
     && cd mase \
-    && pip3 install -e . \
+    && pip3 install . \
     && cd .. \
     && rm -rf mase
