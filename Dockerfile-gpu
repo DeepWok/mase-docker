@@ -1,25 +1,33 @@
-# This Dockerfile configures a Docker environment that
-# contains all the required packages for the tool
-FROM ubuntu:22.04
+# GPU Dockerfile for MASE
+#
+# Uses a plain Ubuntu base image. CUDA support is provided by the PyTorch
+# wheel which bundles the necessary CUDA runtime libraries.
+#
+# Requirements:
+#   - NVIDIA GPU with drivers installed on the host
+#   - Run with: docker run --gpus all ...
+#
+# Example build command:
+#   docker buildx build --platform linux/amd64 \
+#     -f Dockerfile-gpu \
+#     --tag aaronyirenzhao/mase-gpu:latest \
+#     --push .
 
+FROM ubuntu:22.04
 USER root
 
-# Install apt packages 
+# Install system packages
 ADD install-pkgs.sh install-pkgs.sh
 RUN bash install-pkgs.sh
 
-CMD ["bash"]
-
-# Install PyTorch and Torch-MLIR
 RUN pip3 install --upgrade pip
-RUN pip3 install torch torchvision torchaudio
 
-# Install pip packages 
+# Install PyTorch with CUDA support.
+# pip installs the CUDA-enabled wheel by default on Linux (includes bundled CUDA runtime).
+RUN pip3 install --no-cache-dir torch torchvision torchaudio
+
+# Install MASE and its dependencies
 ADD install-pips.sh install-pips.sh
 RUN bash install-pips.sh
 
-# Add environment variables
-ARG VHLS_PATH
-ARG VHLS_VERSION
-ADD install-env.sh install-env.sh
-RUN bash install-env.sh $VHLS_PATH $VHLS_VERSION
+CMD ["bash"]

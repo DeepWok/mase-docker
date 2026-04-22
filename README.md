@@ -1,11 +1,68 @@
 # MASE Docker
 
-The docker container used to run MASE.
+Docker images for running MASE. Two variants are provided:
 
-The deps are in `setup.py` of deepwok/mase
+- `Dockerfile-cpu` — CPU-only, used for CI and general development
+- `Dockerfile-gpu` — CUDA-enabled, for GPU-accelerated training and inference
 
-## How to update dependencies?
+## Official Images (DeepWok)
 
-1. Create a PR to update deps in mase-tools
+The official MASE Docker images are automatically built and pushed to Docker Hub
+by GitHub Actions whenever changes are merged into `main`:
 
-2. Manually trigger the build in mase-docker
+| Image | Docker Hub |
+|-------|-----------|
+| CPU | `deepwok/mase-docker-cpu:latest` |
+| GPU | `deepwok/mase-docker-gpu:latest` |
+
+To use the official images:
+
+```bash
+# CPU
+docker pull deepwok/mase-docker-cpu:latest
+
+# GPU
+docker pull deepwok/mase-docker-gpu:latest
+```
+
+---
+
+## Build Your Own Image
+
+If you need to customise the image (e.g. different CUDA version, private fork),
+you can build and push it yourself.
+
+**Prerequisites:**
+- [Docker Desktop](https://docs.docker.com/get-docker/) with `buildx` support
+- A [Docker Hub](https://hub.docker.com/) account
+- For GPU image: check your host driver version with `nvidia-smi`
+
+Replace `<your-dockerhub-username>` with your Docker Hub username before running.
+
+**CPU image:**
+
+```bash
+DOCKER_USER=<your-dockerhub-username>
+TAG=$(date -u +%Y%m%d%H%M%S) && \
+docker buildx build --no-cache \
+  --platform linux/amd64 \
+  -f Dockerfile-cpu \
+  --tag docker.io/$DOCKER_USER/mase-cpu:$TAG \
+  --tag docker.io/$DOCKER_USER/mase-cpu:latest \
+  --push \
+  .
+```
+
+**GPU image** (see `Dockerfile-gpu` for available CUDA version options):
+
+```bash
+DOCKER_USER=<your-dockerhub-username>
+TAG=$(date -u +%Y%m%d%H%M%S) && \
+docker buildx build --no-cache \
+  --platform linux/amd64 \
+  -f Dockerfile-gpu \
+  --tag docker.io/$DOCKER_USER/mase-gpu:$TAG \
+  --tag docker.io/$DOCKER_USER/mase-gpu:latest \
+  --push \
+  .
+```

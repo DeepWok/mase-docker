@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ "main" ]
   schedule:
-    - cron: '0 1 * * *'   
+    - cron: '0 1 * * *'
 
 jobs:
 
@@ -16,25 +16,21 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the CPU Docker image
+    - name: Build and push the CPU Docker image
       run: |
         TAG=$(date -u +%Y%m%d%H%M%S)
 
-        docker build --no-cache --build-arg VHLS_PATH=/mnt/applications/Xilinx/23.1 \
-          --build-arg VHLS_VERSION=2023.1 \
+        docker build --no-cache \
           -f Dockerfile-cpu \
           --tag docker.io/deepwok/mase-docker-cpu:$TAG . || exit 1
 
-        # Push to dockerhub
         if [ "${{ secrets.DOCKER_HUB_PASSWORD }}" != "" ]; then
-          echo ${{secrets.DOCKER_HUB_PASSWORD}} | docker login docker.io -u deepwok --password-stdin
+          echo ${{ secrets.DOCKER_HUB_PASSWORD }} | docker login docker.io -u deepwok --password-stdin
           docker push docker.io/deepwok/mase-docker-cpu:$TAG
           docker tag docker.io/deepwok/mase-docker-cpu:$TAG docker.io/deepwok/mase-docker-cpu:latest
           docker push docker.io/deepwok/mase-docker-cpu:latest
-          echo "MASE Docker image for CPU pushed."
+          echo "MASE CPU Docker image pushed."
         else
-          echo "Skipped pushing docker image for CPU."
+          echo "Skipped pushing: DOCKER_HUB_PASSWORD secret not configured."
         fi
-
-
 
