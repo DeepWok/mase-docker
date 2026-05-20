@@ -11,6 +11,7 @@ mkdir -p /srcPkgs \
     && cd /srcPkgs \
     && git clone https://github.com/DeepWok/mase.git \
     && cd mase \
+    && pip3 install . \
     && pip3 install ".[mx-ptq]" \
     && cd .. \
     && rm -rf mase
