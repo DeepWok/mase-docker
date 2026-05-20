@@ -11,6 +11,6 @@ mkdir -p /srcPkgs \
     && cd /srcPkgs \
     && git clone https://github.com/DeepWok/mase.git \
     && cd mase \
-    && pip3 install --no-build-isolation --extra-index-url https://download.pytorch.org/whl/cu128 ".[mx-ptq]" \
+    && pip3 install --no-build-isolation --extra-index-url https://download.pytorch.org/whl/cu128 ".${1:-}" \
     && cd .. \
     && rm -rf mase

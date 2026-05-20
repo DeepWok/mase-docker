@@ -27,6 +27,6 @@ RUN pip3 install --no-cache-dir --index-url https://download.pytorch.org/whl/cu1
 
 # Install MASE and its dependencies
 ADD install-pips.sh install-pips.sh
-RUN bash install-pips.sh
+RUN bash install-pips.sh "[mx-ptq]"
 
 CMD ["bash"]
