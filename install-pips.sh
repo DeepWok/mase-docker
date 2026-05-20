@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # --------------------------------------------------------------------
-#    This script installs pip packages for both Docker containers
+#    This script installs pip packages for both Docker containers 
 # --------------------------------------------------------------------
 set -o errexit
 set -o pipefail
