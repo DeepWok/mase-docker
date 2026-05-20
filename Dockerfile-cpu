@@ -4,7 +4,7 @@ USER root
 ADD install-pkgs.sh install-pkgs.sh
 RUN bash install-pkgs.sh
 
-RUN pip3 install --upgrade pip
+RUN pip3 install --upgrade pip setuptools wheel packaging flit_core
 
 # Pin CPU-only PyTorch before MASE install to prevent pip from pulling in the CUDA variant
 RUN pip3 install --no-cache-dir \
