@@ -1,10 +1,10 @@
 # GPU Dockerfile for MASE
 #
-# Uses a plain Ubuntu base image. CUDA support is provided by the PyTorch
-# wheel which bundles the necessary CUDA runtime libraries.
+# Uses the CUDA devel base image which includes nvcc, required to compile
+# CUDA extensions such as fast-hadamard-transform.
 #
 # Requirements:
-#   - NVIDIA GPU with drivers installed on the host  
+#   - NVIDIA GPU with drivers installed on the host
 #   - Run with: docker run --gpus all ...
 #
 # Example build command:
@@ -13,18 +13,17 @@
 #     --tag aaronyirenzhao/mase-gpu:latest \
 #     --push .
 
-FROM ubuntu:22.04
+FROM nvidia/cuda:12.8.1-devel-ubuntu22.04
 USER root
 
 # Install system packages
 ADD install-pkgs.sh install-pkgs.sh
 RUN bash install-pkgs.sh
 
-RUN pip3 install --upgrade pip
+RUN pip3 install --upgrade pip setuptools wheel packaging flit_core
 
-# Install PyTorch with CUDA support.
-# pip installs the CUDA-enabled wheel by default on Linux (includes bundled CUDA runtime).
-RUN pip3 install --no-cache-dir torch torchvision torchaudio
+# Install PyTorch with CUDA 12.8 support.
+RUN pip3 install --no-cache-dir --extra-index-url https://download.pytorch.org/whl/cu128 torch torchvision torchaudio
 
 # Install MASE and its dependencies
 ADD install-pips.sh install-pips.sh
