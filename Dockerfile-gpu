@@ -23,7 +23,7 @@ RUN bash install-pkgs.sh
 RUN pip3 install --upgrade pip setuptools wheel packaging flit_core
 
 # Install PyTorch with CUDA 12.8 support.
-RUN pip3 install --no-cache-dir --extra-index-url https://download.pytorch.org/whl/cu128 torch torchvision torchaudio
+RUN pip3 install --no-cache-dir --index-url https://download.pytorch.org/whl/cu128 torch torchvision torchaudio
 
 # Install MASE and its dependencies
 ADD install-pips.sh install-pips.sh
