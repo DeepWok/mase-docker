@@ -4,7 +4,7 @@
 # CUDA extensions such as fast-hadamard-transform.
 #
 # Requirements:
-#   - NVIDIA GPU with drivers installed on the host
+#   - NVIDIA GPU with drivers installed on the host 
 #   - Run with: docker run --gpus all ...
 #
 # Example build command:
